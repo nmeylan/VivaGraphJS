@@ -4373,7 +4373,12 @@ function renderer(graph, settings) {
       graphics.graphCenterChanged(transform.offsetX - x * transform.scale, transform.offsetY - y * transform.scale);
       renderGraph();
     },
-
+    /**
+     * Update the center of the graph
+     */
+    updateCenter: function() {
+      updateCenter();
+    },
     /**
      * Gets current graphics object
      */
