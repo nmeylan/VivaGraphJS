@@ -43,7 +43,6 @@
     "ngraph.graph": "0.0.11",
     "ngraph.merge": "0.0.1",
     "ngraph.random": "0.0.1",
-    "ngraph.tojson": "0.1.3",
-    "simplesvg": "0.0.10"
+    "ngraph.tojson": "0.1.3"
   }
 }

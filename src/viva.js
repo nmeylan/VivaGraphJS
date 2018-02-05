@@ -47,7 +47,6 @@ Viva.Graph = {
   },
 
   Input: {
-    domInputManager: require('./Input/domInputManager.js'),
     webglInputManager: require('./Input/webglInputManager.js')
   },
 
@@ -83,17 +82,12 @@ Viva.Graph = {
     },
 
     // TODO: move to svg namespace
-    svgGraphics: require('./View/svgGraphics.js'),
 
     renderer: require('./View/renderer.js'),
 
     // deprecated
     cssGraphics: function() {
       throw new Error('cssGraphics is deprecated. Please use older version of vivagraph (< 0.7) if you need it');
-    },
-
-    svgNodeFactory: function() {
-      throw new Error('svgNodeFactory is deprecated. Please use older version of vivagraph (< 0.7) if you need it');
     },
 
     community: function() {
@@ -103,7 +97,6 @@ Viva.Graph = {
 
   Rect: require('./Utils/rect.js'),
 
-  svg: require('simplesvg'),
 
   // TODO: should be camelCase
   BrowserInfo: require('./Utils/browserInfo.js')

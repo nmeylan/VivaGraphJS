@@ -48,7 +48,6 @@ Viva.Graph = {
   },
 
   Input: {
-    domInputManager: require('./Input/domInputManager.js'),
     webglInputManager: require('./Input/webglInputManager.js')
   },
 
@@ -84,17 +83,12 @@ Viva.Graph = {
     },
 
     // TODO: move to svg namespace
-    svgGraphics: require('./View/svgGraphics.js'),
 
     renderer: require('./View/renderer.js'),
 
     // deprecated
     cssGraphics: function() {
       throw new Error('cssGraphics is deprecated. Please use older version of vivagraph (< 0.7) if you need it');
-    },
-
-    svgNodeFactory: function() {
-      throw new Error('svgNodeFactory is deprecated. Please use older version of vivagraph (< 0.7) if you need it');
     },
 
     community: function() {
@@ -104,7 +98,6 @@ Viva.Graph = {
 
   Rect: require('./Utils/rect.js'),
 
-  svg: require('simplesvg'),
 
   // TODO: should be camelCase
   BrowserInfo: require('./Utils/browserInfo.js')
@@ -112,55 +105,7 @@ Viva.Graph = {
 
 module.exports = Viva;
 
-},{"./Algorithms/centrality.js":32,"./Algorithms/operations.js":33,"./Input/domInputManager.js":34,"./Input/dragndrop.js":35,"./Input/webglInputManager.js":36,"./Layout/constant.js":37,"./Utils/backwardCompatibleEvents.js":38,"./Utils/browserInfo.js":39,"./Utils/findElementPosition.js":41,"./Utils/getDimensions.js":42,"./Utils/intersectRect.js":43,"./Utils/rect.js":45,"./Utils/timer.js":46,"./View/renderer.js":48,"./View/svgGraphics.js":49,"./View/webglGraphics.js":50,"./WebGL/parseColor.js":51,"./WebGL/texture.js":52,"./WebGL/webgl.js":53,"./WebGL/webglAtlas.js":54,"./WebGL/webglImage.js":55,"./WebGL/webglImageNodeProgram.js":56,"./WebGL/webglInputEvents.js":57,"./WebGL/webglLine.js":58,"./WebGL/webglLinkProgram.js":59,"./WebGL/webglNodeProgram.js":60,"./WebGL/webglSquare.js":61,"./version.js":62,"gintersect":3,"ngraph.events":7,"ngraph.forcelayout":9,"ngraph.fromjson":10,"ngraph.generators":11,"ngraph.graph":12,"ngraph.merge":13,"ngraph.random":26,"ngraph.tojson":27,"simplesvg":28}],2:[function(require,module,exports){
-addEventListener.removeEventListener = removeEventListener
-addEventListener.addEventListener = addEventListener
-
-module.exports = addEventListener
-
-var Events = null
-
-function addEventListener(el, eventName, listener, useCapture) {
-  Events = Events || (
-    document.addEventListener ?
-    {add: stdAttach, rm: stdDetach} :
-    {add: oldIEAttach, rm: oldIEDetach}
-  )
-  
-  return Events.add(el, eventName, listener, useCapture)
-}
-
-function removeEventListener(el, eventName, listener, useCapture) {
-  Events = Events || (
-    document.addEventListener ?
-    {add: stdAttach, rm: stdDetach} :
-    {add: oldIEAttach, rm: oldIEDetach}
-  )
-  
-  return Events.rm(el, eventName, listener, useCapture)
-}
-
-function stdAttach(el, eventName, listener, useCapture) {
-  el.addEventListener(eventName, listener, useCapture)
-}
-
-function stdDetach(el, eventName, listener, useCapture) {
-  el.removeEventListener(eventName, listener, useCapture)
-}
-
-function oldIEAttach(el, eventName, listener, useCapture) {
-  if(useCapture) {
-    throw new Error('cannot useCapture in oldIE')
-  }
-
-  el.attachEvent('on' + eventName, listener)
-}
-
-function oldIEDetach(el, eventName, listener, useCapture) {
-  el.detachEvent('on' + eventName, listener)
-}
-
-},{}],3:[function(require,module,exports){
+},{"./Algorithms/centrality.js":27,"./Algorithms/operations.js":28,"./Input/dragndrop.js":29,"./Input/webglInputManager.js":30,"./Layout/constant.js":31,"./Utils/backwardCompatibleEvents.js":32,"./Utils/browserInfo.js":33,"./Utils/findElementPosition.js":35,"./Utils/getDimensions.js":36,"./Utils/intersectRect.js":37,"./Utils/rect.js":39,"./Utils/timer.js":40,"./View/renderer.js":42,"./View/webglGraphics.js":43,"./WebGL/parseColor.js":44,"./WebGL/texture.js":45,"./WebGL/webgl.js":46,"./WebGL/webglAtlas.js":47,"./WebGL/webglImage.js":48,"./WebGL/webglImageNodeProgram.js":49,"./WebGL/webglInputEvents.js":50,"./WebGL/webglLine.js":51,"./WebGL/webglLinkProgram.js":52,"./WebGL/webglNodeProgram.js":53,"./WebGL/webglSquare.js":54,"./version.js":55,"gintersect":2,"ngraph.events":6,"ngraph.forcelayout":8,"ngraph.fromjson":9,"ngraph.generators":10,"ngraph.graph":11,"ngraph.merge":12,"ngraph.random":25,"ngraph.tojson":26}],2:[function(require,module,exports){
 module.exports = intersect;
 
 /**
@@ -261,11 +206,11 @@ function intersect(
   return result;
 }
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 module.exports.degree = require('./src/degree.js');
 module.exports.betweenness = require('./src/betweenness.js');
 
-},{"./src/betweenness.js":5,"./src/degree.js":6}],5:[function(require,module,exports){
+},{"./src/betweenness.js":4,"./src/degree.js":5}],4:[function(require,module,exports){
 module.exports = betweennes;
 
 /**
@@ -377,7 +322,7 @@ function betweennes(graph, oriented) {
   }
 }
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = degree;
 
 /**
@@ -438,7 +383,7 @@ function inoutDegreeCalculator(links) {
   return links.length;
 }
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(subject) {
   validateSubject(subject);
 
@@ -528,7 +473,7 @@ function validateSubject(subject) {
   }
 }
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = exposeProperties;
 
 /**
@@ -574,7 +519,7 @@ function augment(source, target, key) {
   }
 }
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = createLayout;
 module.exports.simulator = require('ngraph.physics.simulator');
 
@@ -942,7 +887,7 @@ function createLayout(graph, physicsSettings) {
 
 function noop() { }
 
-},{"ngraph.events":7,"ngraph.physics.simulator":15}],10:[function(require,module,exports){
+},{"ngraph.events":6,"ngraph.physics.simulator":14}],9:[function(require,module,exports){
 module.exports = load;
 
 var createGraph = require('ngraph.graph');
@@ -987,7 +932,7 @@ function load(jsonGraph, nodeTransform, linkTransform) {
 
 function id(x) { return x; }
 
-},{"ngraph.graph":12}],11:[function(require,module,exports){
+},{"ngraph.graph":11}],10:[function(require,module,exports){
 module.exports = {
   ladder: ladder,
   complete: complete,
@@ -1288,7 +1233,7 @@ function wattsStrogatz(n, k, p, seed) {
   return g;
 }
 
-},{"ngraph.graph":12,"ngraph.random":26}],12:[function(require,module,exports){
+},{"ngraph.graph":11,"ngraph.random":25}],11:[function(require,module,exports){
 /**
  * @fileOverview Contains definition of the core graph object.
  */
@@ -1842,7 +1787,7 @@ function Link(fromId, toId, data, id) {
   this.id = id;
 }
 
-},{"ngraph.events":7}],13:[function(require,module,exports){
+},{"ngraph.events":6}],12:[function(require,module,exports){
 module.exports = merge;
 
 /**
@@ -1875,7 +1820,7 @@ function merge(target, options) {
   return target;
 }
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = {
   Body: Body,
   Vector2d: Vector2d,
@@ -1942,7 +1887,7 @@ Vector3d.prototype.reset = function () {
   this.x = this.y = this.z = 0;
 };
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Manages a simulation of physical forces acting on bodies and springs.
  */
@@ -2211,7 +2156,7 @@ function physicsSimulator(settings) {
   }
 };
 
-},{"./lib/bounds":16,"./lib/createBody":17,"./lib/dragForce":18,"./lib/eulerIntegrator":19,"./lib/spring":20,"./lib/springForce":21,"ngraph.events":7,"ngraph.expose":8,"ngraph.merge":13,"ngraph.quadtreebh":22}],16:[function(require,module,exports){
+},{"./lib/bounds":15,"./lib/createBody":16,"./lib/dragForce":17,"./lib/eulerIntegrator":18,"./lib/spring":19,"./lib/springForce":20,"ngraph.events":6,"ngraph.expose":7,"ngraph.merge":12,"ngraph.quadtreebh":21}],15:[function(require,module,exports){
 module.exports = function (bodies, settings) {
   var random = require('ngraph.random').random(42);
   var boundingBox =  { x1: 0, y1: 0, x2: 0, y2: 0 };
@@ -2293,14 +2238,14 @@ module.exports = function (bodies, settings) {
   }
 }
 
-},{"ngraph.random":26}],17:[function(require,module,exports){
+},{"ngraph.random":25}],16:[function(require,module,exports){
 var physics = require('ngraph.physics.primitives');
 
 module.exports = function(pos) {
   return new physics.Body(pos);
 }
 
-},{"ngraph.physics.primitives":14}],18:[function(require,module,exports){
+},{"ngraph.physics.primitives":13}],17:[function(require,module,exports){
 /**
  * Represents drag force, which reduces force value on each step by given
  * coefficient.
@@ -2329,7 +2274,7 @@ module.exports = function (options) {
   return api;
 };
 
-},{"ngraph.expose":8,"ngraph.merge":13}],19:[function(require,module,exports){
+},{"ngraph.expose":7,"ngraph.merge":12}],18:[function(require,module,exports){
 /**
  * Performs forces integration, using given timestep. Uses Euler method to solve
  * differential equation (http://en.wikipedia.org/wiki/Euler_method ).
@@ -2376,7 +2321,7 @@ function integrate(bodies, timeStep) {
   return (tx * tx + ty * ty)/max;
 }
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 module.exports = Spring;
 
 /**
@@ -2392,7 +2337,7 @@ function Spring(fromBody, toBody, length, coeff, weight) {
     this.weight = typeof weight === 'number' ? weight : 1;
 };
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * Represents spring force, which updates forces acting on two bodies, conntected
  * by a spring.
@@ -2444,7 +2389,7 @@ module.exports = function (options) {
   return api;
 }
 
-},{"ngraph.expose":8,"ngraph.merge":13,"ngraph.random":26}],22:[function(require,module,exports){
+},{"ngraph.expose":7,"ngraph.merge":12,"ngraph.random":25}],21:[function(require,module,exports){
 /**
  * This is Barnes Hut simulation algorithm for 2d case. Implementation
  * is highly optimized (avoids recusion and gc pressure)
@@ -2773,7 +2718,7 @@ function setChild(node, idx, child) {
   else if (idx === 3) node.quad3 = child;
 }
 
-},{"./insertStack":23,"./isSamePosition":24,"./node":25,"ngraph.random":26}],23:[function(require,module,exports){
+},{"./insertStack":22,"./isSamePosition":23,"./node":24,"ngraph.random":25}],22:[function(require,module,exports){
 module.exports = InsertStack;
 
 /**
@@ -2817,7 +2762,7 @@ function InsertStackElement(node, body) {
     this.body = body; // physical body which needs to be inserted to node
 }
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 module.exports = function isSamePosition(point1, point2) {
     var dx = Math.abs(point1.x - point2.x);
     var dy = Math.abs(point1.y - point2.y);
@@ -2825,7 +2770,7 @@ module.exports = function isSamePosition(point1, point2) {
     return (dx < 1e-8 && dy < 1e-8);
 };
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * Internal data structure to represent 2D QuadTree node
  */
@@ -2857,7 +2802,7 @@ module.exports = function Node() {
   this.right = 0;
 };
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 module.exports = {
   random: random,
   randomIterator: randomIterator
@@ -2944,7 +2889,7 @@ function randomIterator(array, customRandom) {
     };
 }
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 module.exports = save;
 
 function save(graph, customNodeTransform, customLinkTransform) {
@@ -3000,258 +2945,7 @@ function save(graph, customNodeTransform, customLinkTransform) {
   }
 }
 
-},{}],28:[function(require,module,exports){
-module.exports = svg;
-
-svg.compile = require('./lib/compile');
-
-var compileTemplate = svg.compileTemplate = require('./lib/compile_template');
-
-var domEvents = require('add-event-listener');
-
-var svgns = "http://www.w3.org/2000/svg";
-var xlinkns = "http://www.w3.org/1999/xlink";
-
-function svg(element, attrBag) {
-  var svgElement = augment(element);
-  if (attrBag === undefined) {
-    return svgElement;
-  }
-
-  var attributes = Object.keys(attrBag);
-  for (var i = 0; i < attributes.length; ++i) {
-    var attributeName = attributes[i];
-    var value = attrBag[attributeName];
-    if (attributeName === 'link') {
-      svgElement.link(value);
-    } else {
-      svgElement.attr(attributeName, value);
-    }
-  }
-
-  return svgElement;
-}
-
-function augment(element) {
-  var svgElement = element;
-
-  if (typeof element === "string") {
-    svgElement = window.document.createElementNS(svgns, element);
-  } else if (element.simplesvg) {
-    return element;
-  }
-
-  var compiledTempalte;
-
-  svgElement.simplesvg = true; // this is not good, since we are monkey patching svg
-  svgElement.attr = attr;
-  svgElement.append = append;
-  svgElement.link = link;
-  svgElement.text = text;
-
-  // add easy eventing
-  svgElement.on = on;
-  svgElement.off = off;
-
-  // data binding:
-  svgElement.dataSource = dataSource;
-
-  return svgElement;
-
-  function dataSource(model) {
-    if (!compiledTempalte) compiledTempalte = compileTemplate(svgElement);
-    compiledTempalte.link(model);
-    return svgElement;
-  }
-
-  function on(name, cb, useCapture) {
-    domEvents.addEventListener(svgElement, name, cb, useCapture);
-    return svgElement;
-  }
-
-  function off(name, cb, useCapture) {
-    domEvents.removeEventListener(svgElement, name, cb, useCapture);
-    return svgElement;
-  }
-
-  function append(content) {
-    var child = svg(content);
-    svgElement.appendChild(child);
-
-    return child;
-  }
-
-  function attr(name, value) {
-    if (arguments.length === 2) {
-      if (value !== null) {
-        svgElement.setAttributeNS(null, name, value);
-      } else {
-        svgElement.removeAttributeNS(null, name);
-      }
-
-      return svgElement;
-    }
-
-    return svgElement.getAttributeNS(null, name);
-  }
-
-  function link(target) {
-    if (arguments.length) {
-      svgElement.setAttributeNS(xlinkns, "xlink:href", target);
-      return svgElement;
-    }
-
-    return svgElement.getAttributeNS(xlinkns, "xlink:href");
-  }
-
-  function text(textContent) {
-    if (textContent !== undefined) {
-        svgElement.textContent = textContent;
-        return svgElement;
-    }
-    return svgElement.textContent;
-  }
-}
-
-},{"./lib/compile":29,"./lib/compile_template":30,"add-event-listener":2}],29:[function(require,module,exports){
-var parser = require('./domparser.js');
-var svg = require('../');
-
-module.exports = compile;
-
-function compile(svgText) {
-  try {
-    svgText = addNamespaces(svgText);
-    return svg(parser.parseFromString(svgText, "text/xml").documentElement);
-  } catch (e) {
-    throw e;
-  }
-}
-
-function addNamespaces(text) {
-  if (!text) return;
-
-  var namespaces = 'xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"';
-  var match = text.match(/^<\w+/);
-  if (match) {
-    var tagLength = match[0].length;
-    return text.substr(0, tagLength) + ' ' + namespaces + ' ' + text.substr(tagLength);
-  } else {
-    throw new Error('Cannot parse input text: invalid xml?');
-  }
-}
-
-},{"../":28,"./domparser.js":31}],30:[function(require,module,exports){
-module.exports = template;
-
-var BINDING_EXPR = /{{(.+?)}}/;
-
-function template(domNode) {
-  var allBindings = Object.create(null);
-  extractAllBindings(domNode, allBindings);
-
-  return {
-    link: function(model) {
-      Object.keys(allBindings).forEach(function(key) {
-        var setter = allBindings[key];
-        setter.forEach(changeModel);
-      });
-
-      function changeModel(setter) {
-        setter(model);
-      }
-    }
-  };
-}
-
-function extractAllBindings(domNode, allBindings) {
-  var nodeType = domNode.nodeType;
-  var typeSupported = (nodeType === 1) || (nodeType === 3);
-  if (!typeSupported) return;
-  var i;
-  if (domNode.hasChildNodes()) {
-    var domChildren = domNode.childNodes;
-    for (i = 0; i < domChildren.length; ++i) {
-      extractAllBindings(domChildren[i], allBindings);
-    }
-  }
-
-  if (nodeType === 3) { // text:
-    bindTextContent(domNode, allBindings);
-  }
-
-  if (!domNode.attributes) return; // this might be a text. Need to figure out what to do in that case
-
-  var attrs = domNode.attributes;
-  for (i = 0; i < attrs.length; ++i) {
-    bindDomAttribute(attrs[i], domNode, allBindings);
-  }
-}
-
-function bindDomAttribute(domAttribute, element, allBindings) {
-  var value = domAttribute.value;
-  if (!value) return; // unary attribute?
-
-  var modelNameMatch = value.match(BINDING_EXPR);
-  if (!modelNameMatch) return; // does not look like a binding
-
-  var attrName = domAttribute.localName;
-  var modelPropertyName = modelNameMatch[1];
-  var isSimpleValue = modelPropertyName.indexOf('.') < 0;
-
-  if (!isSimpleValue) throw new Error('simplesvg currently does not support nested bindings');
-
-  var propertyBindings = allBindings[modelPropertyName];
-  if (!propertyBindings) {
-    propertyBindings = allBindings[modelPropertyName] = [attributeSetter];
-  } else {
-    propertyBindings.push(attributeSetter);
-  }
-
-  function attributeSetter(model) {
-    element.setAttributeNS(null, attrName, model[modelPropertyName]);
-  }
-}
-function bindTextContent(element, allBindings) {
-  // todo reduce duplication
-  var value = element.nodeValue;
-  if (!value) return; // unary attribute?
-
-  var modelNameMatch = value.match(BINDING_EXPR);
-  if (!modelNameMatch) return; // does not look like a binding
-
-  var modelPropertyName = modelNameMatch[1];
-  var isSimpleValue = modelPropertyName.indexOf('.') < 0;
-
-  var propertyBindings = allBindings[modelPropertyName];
-  if (!propertyBindings) {
-    propertyBindings = allBindings[modelPropertyName] = [textSetter];
-  } else {
-    propertyBindings.push(textSetter);
-  }
-
-  function textSetter(model) {
-    element.nodeValue = model[modelPropertyName];
-  }
-}
-
-},{}],31:[function(require,module,exports){
-module.exports = createDomparser();
-
-function createDomparser() {
-  if (typeof DOMParser === 'undefined') {
-    return {
-      parseFromString: fail
-    };
-  }
-  return new DOMParser();
-}
-
-function fail() {
-  throw new Error('DOMParser is not supported by this platform. Please open issue here https://github.com/anvaka/simplesvg');
-}
-
-},{}],32:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var centrality = require('ngraph.centrality');
 
 module.exports = centralityWrapper;
@@ -3289,7 +2983,7 @@ function toVivaGraphCentralityFormat(centrality) {
   }
 }
 
-},{"ngraph.centrality":4}],33:[function(require,module,exports){
+},{"ngraph.centrality":3}],28:[function(require,module,exports){
 /**
  * @fileOverview Contains collection of primitive operations under graph.
  *
@@ -3324,56 +3018,7 @@ function operations() {
     };
 };
 
-},{}],34:[function(require,module,exports){
-/**
- * @author Andrei Kashcha (aka anvaka) / https://github.com/anvaka
- */
-
-module.exports = domInputManager;
-
-var dragndrop = require('./dragndrop.js');
-
-function domInputManager(graph, graphics) {
-  var nodeEvents = {};
-  return {
-    /**
-     * Called by renderer to listen to drag-n-drop events from node. E.g. for SVG
-     * graphics we may listen to DOM events, whereas for WebGL the graphics
-     * should provide custom eventing mechanism.
-     *
-     * @param node - to be monitored.
-     * @param handlers - object with set of three callbacks:
-     *   onStart: function(),
-     *   onDrag: function(e, offset),
-     *   onStop: function()
-     */
-    bindDragNDrop: bindDragNDrop
-  };
-
-  function bindDragNDrop(node, handlers) {
-    var events;
-    if (handlers) {
-      var nodeUI = graphics.getNodeUI(node.id);
-      events = dragndrop(nodeUI);
-      if (typeof handlers.onStart === 'function') {
-        events.onStart(handlers.onStart);
-      }
-      if (typeof handlers.onDrag === 'function') {
-        events.onDrag(handlers.onDrag);
-      }
-      if (typeof handlers.onStop === 'function') {
-        events.onStop(handlers.onStop);
-      }
-
-      nodeEvents[node.id] = events;
-    } else if ((events = nodeEvents[node.id])) {
-      events.release();
-      delete nodeEvents[node.id];
-    }
-  }
-}
-
-},{"./dragndrop.js":35}],35:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  * @author Andrei Kashcha (aka anvaka) / https://github.com/anvaka
  */
@@ -3656,7 +3301,7 @@ function dragndrop(element) {
     };
 }
 
-},{"../Utils/browserInfo.js":39,"../Utils/documentEvents.js":40,"../Utils/findElementPosition.js":41}],36:[function(require,module,exports){
+},{"../Utils/browserInfo.js":33,"../Utils/documentEvents.js":34,"../Utils/findElementPosition.js":35}],30:[function(require,module,exports){
 /**
  * @author Andrei Kashcha (aka anvaka) / https://github.com/anvaka
  */
@@ -3727,7 +3372,7 @@ function webglInputManager(graph, graphics) {
     };
 }
 
-},{"../WebGL/webglInputEvents.js":57}],37:[function(require,module,exports){
+},{"../WebGL/webglInputEvents.js":50}],31:[function(require,module,exports){
 module.exports = constant;
 
 var merge = require('ngraph.merge');
@@ -3926,7 +3571,7 @@ function constant(graph, userSettings) {
     }
 }
 
-},{"../Utils/rect.js":45,"ngraph.merge":13,"ngraph.random":26}],38:[function(require,module,exports){
+},{"../Utils/rect.js":39,"ngraph.merge":12,"ngraph.random":25}],32:[function(require,module,exports){
 /**
  * This module provides compatibility layer with 0.6.x library. It will be
  * removed in the next version
@@ -3971,7 +3616,7 @@ function backwardCompatibleEvents(g) {
   }
 }
 
-},{"ngraph.events":7}],39:[function(require,module,exports){
+},{"ngraph.events":6}],33:[function(require,module,exports){
 module.exports = browserInfo();
 
 function browserInfo() {
@@ -4000,7 +3645,7 @@ function browserInfo() {
   };
 }
 
-},{}],40:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 var nullEvents = require('./nullEvents.js');
 
 module.exports = createDocumentEvents();
@@ -4024,7 +3669,7 @@ function off(eventName, handler) {
   document.removeEventListener(eventName, handler);
 }
 
-},{"./nullEvents.js":44}],41:[function(require,module,exports){
+},{"./nullEvents.js":38}],35:[function(require,module,exports){
 /**
  * Finds the absolute position of an element on a page
  */
@@ -4043,7 +3688,7 @@ function findElementPosition(obj) {
     return [curleft, curtop];
 }
 
-},{}],42:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 module.exports = getDimension;
 
 function getDimension(container) {
@@ -4065,7 +3710,7 @@ function getDimension(container) {
     };
 }
 
-},{}],43:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var intersect = require('gintersect');
 
 module.exports = intersectRect;
@@ -4077,7 +3722,7 @@ function intersectRect(left, top, right, bottom, x1, y1, x2, y2) {
     intersect(right, top, left, top, x1, y1, x2, y2);
 }
 
-},{"gintersect":3}],44:[function(require,module,exports){
+},{"gintersect":2}],38:[function(require,module,exports){
 module.exports = createNullEvents();
 
 function createNullEvents() {
@@ -4090,7 +3735,7 @@ function createNullEvents() {
 
 function noop() { }
 
-},{}],45:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 module.exports = Rect;
 
 /**
@@ -4103,7 +3748,7 @@ function Rect (x1, y1, x2, y2) {
     this.y2 = y2 || 0;
 }
 
-},{}],46:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 /**
  * @author Andrei Kashcha (aka anvaka) / http://anvaka.blogspot.com
@@ -4199,7 +3844,7 @@ function createTimer() {
 function noop() {}
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],47:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 var nullEvents = require('./nullEvents.js');
 
 module.exports = createDocumentEvents();
@@ -4224,7 +3869,7 @@ function off(eventName, handler) {
 }
 
 
-},{"./nullEvents.js":44}],48:[function(require,module,exports){
+},{"./nullEvents.js":38}],42:[function(require,module,exports){
 /**
  * @fileOverview Defines a graph renderer that uses CSS based drawings.
  *
@@ -4235,9 +3880,7 @@ module.exports = renderer;
 
 var eventify = require('ngraph.events');
 var forceDirected = require('ngraph.forcelayout');
-var svgGraphics = require('./svgGraphics.js');
 var windowEvents = require('../Utils/windowEvents.js');
-var domInputManager = require('../Input/domInputManager.js');
 var timer = require('../Utils/timer.js');
 var getDimension = require('../Utils/getDimensions.js');
 var dragndrop = require('../Input/dragndrop.js');
@@ -4422,16 +4065,13 @@ function renderer(graph, settings) {
       springLength: 80,
       springCoeff: 0.0002,
     });
-    graphics = graphics || svgGraphics(graph, {
-      container: container
-    });
 
     if (!settings.hasOwnProperty('renderLinks')) {
       settings.renderLinks = true;
     }
 
     settings.prerender = settings.prerender || 0;
-    inputManager = (graphics.inputManager || domInputManager)(graph, graphics);
+    inputManager = (graphics.inputManager)(graph, graphics);
   }
 
   function renderGraph() {
@@ -4710,365 +4350,7 @@ function renderer(graph, settings) {
   }
 }
 
-},{"../Input/domInputManager.js":34,"../Input/dragndrop.js":35,"../Utils/getDimensions.js":42,"../Utils/timer.js":46,"../Utils/windowEvents.js":47,"./svgGraphics.js":49,"ngraph.events":7,"ngraph.forcelayout":9}],49:[function(require,module,exports){
-/**
- * @fileOverview Defines a graph renderer that uses SVG based drawings.
- *
- * @author Andrei Kashcha (aka anvaka) / http://anvaka.blogspot.com
- */
-
-module.exports = svgGraphics;
-
-var svg = require('simplesvg');
-var eventify = require('ngraph.events');
-var domInputManager = require('../Input/domInputManager.js');
-
-/**
- * Performs svg-based graph rendering. This module does not perform
- * layout, but only visualizes nodes and edges of the graph.
- */
-function svgGraphics() {
-    var svgContainer,
-        svgRoot,
-        offsetX = 0,
-        offsetY = 0,
-        initCallback,
-        actualScale = 1,
-        allNodes = {},
-        allLinks = {},
-/*jshint unused: false */
-        nodeBuilder = function (node) {
-            return svg("rect")
-                     .attr("width", 10)
-                     .attr("height", 10)
-                     .attr("fill", "#00a2e8");
-        },
-
-        nodePositionCallback = function (nodeUI, pos) {
-            // TODO: Remove magic 5. It should be half of the width or height of the node.
-            nodeUI.attr("x", pos.x - 5)
-                  .attr("y", pos.y - 5);
-        },
-
-        linkBuilder = function (link) {
-            return svg("line").attr("stroke", "#999");
-        },
-
-        linkPositionCallback = function (linkUI, fromPos, toPos) {
-            linkUI.attr("x1", fromPos.x)
-                  .attr("y1", fromPos.y)
-                  .attr("x2", toPos.x)
-                  .attr("y2", toPos.y);
-        },
-
-        fireRescaled = function (graphics) {
-            // TODO: maybe we shall copy changes?
-            graphics.fire("rescaled");
-        },
-
-        cachedPos = {x : 0, y: 0},
-        cachedFromPos = {x : 0, y: 0},
-        cachedToPos = {x : 0, y: 0},
-
-        updateTransform = function () {
-            if (svgContainer) {
-                var transform = "matrix(" + actualScale + ", 0, 0," + actualScale + "," + offsetX + "," + offsetY + ")";
-                svgContainer.attr("transform", transform);
-            }
-        };
-
-    svgRoot = createSvgRoot();
-
-    var graphics = {
-        getNodeUI: function (nodeId) {
-            return allNodes[nodeId];
-        },
-
-        getLinkUI: function (linkId) {
-            return allLinks[linkId];
-        },
-
-        /**
-         * Sets the callback that creates node representation.
-         *
-         * @param builderCallback a callback function that accepts graph node
-         * as a parameter and must return an element representing this node.
-         *
-         * @returns If builderCallbackOrNode is a valid callback function, instance of this is returned;
-         * Otherwise undefined value is returned
-         */
-        node : function (builderCallback) {
-            if (typeof builderCallback !== "function") {
-                return; // todo: throw? This is not compatible with old versions
-            }
-
-            nodeBuilder = builderCallback;
-
-            return this;
-        },
-
-        /**
-         * Sets the callback that creates link representation
-         *
-         * @param builderCallback a callback function that accepts graph link
-         * as a parameter and must return an element representing this link.
-         *
-         * @returns If builderCallback is a valid callback function, instance of this is returned;
-         * Otherwise undefined value is returned.
-         */
-        link : function (builderCallback) {
-            if (typeof builderCallback !== "function") {
-                return; // todo: throw? This is not compatible with old versions
-            }
-
-            linkBuilder = builderCallback;
-            return this;
-        },
-
-        /**
-         * Allows to override default position setter for the node with a new
-         * function. newPlaceCallback(nodeUI, position, node) is function which
-         * is used by updateNodePosition().
-         */
-        placeNode : function (newPlaceCallback) {
-            nodePositionCallback = newPlaceCallback;
-            return this;
-        },
-
-        placeLink : function (newPlaceLinkCallback) {
-            linkPositionCallback = newPlaceLinkCallback;
-            return this;
-        },
-
-        /**
-         * Called every before renderer starts rendering.
-         */
-        beginRender : function () {},
-
-        /**
-         * Called every time when renderer finishes one step of rendering.
-         */
-        endRender : function () {},
-
-        /**
-         * Sets translate operation that should be applied to all nodes and links.
-         */
-        graphCenterChanged : function (x, y) {
-            offsetX = x;
-            offsetY = y;
-            updateTransform();
-        },
-
-        /**
-         * Default input manager listens to DOM events to process nodes drag-n-drop
-         */
-        inputManager : domInputManager,
-
-        translateRel : function (dx, dy) {
-            var p = svgRoot.createSVGPoint(),
-                t = svgContainer.getCTM(),
-                origin = svgRoot.createSVGPoint().matrixTransform(t.inverse());
-
-            p.x = dx;
-            p.y = dy;
-
-            p = p.matrixTransform(t.inverse());
-            p.x = (p.x - origin.x) * t.a;
-            p.y = (p.y - origin.y) * t.d;
-
-            t.e += p.x;
-            t.f += p.y;
-
-            var transform = "matrix(" + t.a + ", 0, 0," + t.d + "," + t.e + "," + t.f + ")";
-            svgContainer.attr("transform", transform);
-        },
-
-        scale : function (scaleFactor, scrollPoint) {
-            var p = svgRoot.createSVGPoint();
-            p.x = scrollPoint.x;
-            p.y = scrollPoint.y;
-
-            p = p.matrixTransform(svgContainer.getCTM().inverse()); // translate to SVG coordinates
-
-            // Compute new scale matrix in current mouse position
-            var k = svgRoot.createSVGMatrix().translate(p.x, p.y).scale(scaleFactor).translate(-p.x, -p.y),
-                t = svgContainer.getCTM().multiply(k);
-
-            actualScale = t.a;
-            offsetX = t.e;
-            offsetY = t.f;
-            var transform = "matrix(" + t.a + ", 0, 0," + t.d + "," + t.e + "," + t.f + ")";
-            svgContainer.attr("transform", transform);
-
-            fireRescaled(this);
-            return actualScale;
-        },
-
-        resetScale : function () {
-            actualScale = 1;
-            var transform = "matrix(1, 0, 0, 1, 0, 0)";
-            svgContainer.attr("transform", transform);
-            fireRescaled(this);
-            return this;
-        },
-
-       /**
-        * Called by Viva.Graph.View.renderer to let concrete graphic output
-        * provider prepare to render.
-        */
-        init : function (container) {
-            container.appendChild(svgRoot);
-            updateTransform();
-            // Notify the world if someone waited for update. TODO: should send an event
-            if (typeof initCallback === "function") {
-                initCallback(svgRoot);
-            }
-        },
-
-       /**
-        * Called by Viva.Graph.View.renderer to let concrete graphic output
-        * provider release occupied resources.
-        */
-        release : function (container) {
-            if (svgRoot && container) {
-                container.removeChild(svgRoot);
-            }
-        },
-
-        /**
-         * Called by Viva.Graph.View.renderer to let concrete graphic output
-         * provider prepare to render given link of the graph
-         *
-         * @param link - model of a link
-         */
-        addLink: function (link, pos) {
-            var linkUI = linkBuilder(link);
-            if (!linkUI) { return; }
-            linkUI.position = pos;
-            linkUI.link = link;
-            allLinks[link.id] = linkUI;
-            if (svgContainer.childElementCount > 0) {
-                svgContainer.insertBefore(linkUI, svgContainer.firstChild);
-            } else {
-                svgContainer.appendChild(linkUI);
-            }
-            return linkUI;
-        },
-
-       /**
-        * Called by Viva.Graph.View.renderer to let concrete graphic output
-        * provider remove link from rendering surface.
-        *
-        * @param linkUI visual representation of the link created by link() execution.
-        **/
-        releaseLink : function (link) {
-            var linkUI = allLinks[link.id];
-            if (linkUI) {
-                svgContainer.removeChild(linkUI);
-                delete allLinks[link.id];
-            }
-        },
-
-       /**
-        * Called by Viva.Graph.View.renderer to let concrete graphic output
-        * provider prepare to render given node of the graph.
-        *
-        * @param nodeUI visual representation of the node created by node() execution.
-        **/
-        addNode : function (node, pos) {
-            var nodeUI = nodeBuilder(node);
-            if (!nodeUI) {
-                return;
-            }
-            nodeUI.position = pos;
-            nodeUI.node = node;
-            allNodes[node.id] = nodeUI;
-
-            svgContainer.appendChild(nodeUI);
-
-            return nodeUI;
-        },
-
-       /**
-        * Called by Viva.Graph.View.renderer to let concrete graphic output
-        * provider remove node from rendering surface.
-        *
-        * @param node graph's node
-        **/
-        releaseNode : function (node) {
-            var nodeUI = allNodes[node.id];
-            if (nodeUI) {
-                svgContainer.removeChild(nodeUI);
-                delete allNodes[node.id];
-            }
-        },
-
-        renderNodes : function () {
-            for (var key in allNodes) {
-                if (allNodes.hasOwnProperty(key)) {
-                    var nodeUI = allNodes[key];
-                    cachedPos.x = nodeUI.position.x;
-                    cachedPos.y = nodeUI.position.y;
-                    nodePositionCallback(nodeUI, cachedPos, nodeUI.node);
-                }
-            }
-        },
-
-        renderLinks : function () {
-            for (var key in allLinks) {
-                if (allLinks.hasOwnProperty(key)) {
-                    var linkUI = allLinks[key];
-                    cachedFromPos.x = linkUI.position.from.x;
-                    cachedFromPos.y = linkUI.position.from.y;
-                    cachedToPos.x = linkUI.position.to.x;
-                    cachedToPos.y = linkUI.position.to.y;
-                    linkPositionCallback(linkUI, cachedFromPos, cachedToPos, linkUI.link);
-                }
-            }
-        },
-
-        /**
-         * Returns root element which hosts graphics.
-         */
-        getGraphicsRoot : function (callbackWhenReady) {
-            // todo: should fire an event, instead of having this context.
-            if (typeof callbackWhenReady === "function") {
-                if (svgRoot) {
-                    callbackWhenReady(svgRoot);
-                } else {
-                    initCallback = callbackWhenReady;
-                }
-            }
-            return svgRoot;
-        },
-        /**
-         * Returns root SVG element.
-         *
-         * Note: This is internal method specific to this renderer
-         */
-        getSvgRoot : function () {
-            return svgRoot;
-        }
-    };
-
-
-    // Let graphics fire events before we return it to the caller.
-    eventify(graphics);
-
-    return graphics;
-
-    function createSvgRoot() {
-        var svgRoot = svg("svg");
-
-        svgContainer = svg("g")
-              .attr("buffered-rendering", "dynamic");
-
-        svgRoot.appendChild(svgContainer);
-        return svgRoot;
-    }
-}
-
-},{"../Input/domInputManager.js":34,"ngraph.events":7,"simplesvg":28}],50:[function(require,module,exports){
+},{"../Input/dragndrop.js":29,"../Utils/getDimensions.js":36,"../Utils/timer.js":40,"../Utils/windowEvents.js":41,"ngraph.events":6,"ngraph.forcelayout":8}],43:[function(require,module,exports){
 /**
  * @fileOverview Defines a graph renderer that uses WebGL based drawings.
  *
@@ -5656,7 +4938,7 @@ function webglGraphics(options) {
     return graphics;
 }
 
-},{"../Input/webglInputManager.js":36,"../WebGL/webglLine.js":58,"../WebGL/webglLinkProgram.js":59,"../WebGL/webglNodeProgram.js":60,"../WebGL/webglSquare.js":61,"ngraph.events":7,"ngraph.merge":13}],51:[function(require,module,exports){
+},{"../Input/webglInputManager.js":30,"../WebGL/webglLine.js":51,"../WebGL/webglLinkProgram.js":52,"../WebGL/webglNodeProgram.js":53,"../WebGL/webglSquare.js":54,"ngraph.events":6,"ngraph.merge":12}],44:[function(require,module,exports){
 module.exports = parseColor;
 
 function parseColor(color) {
@@ -5680,7 +4962,7 @@ function parseColor(color) {
   return parsedColor;
 }
 
-},{}],52:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 module.exports = Texture;
 
 /**
@@ -5693,7 +4975,7 @@ function Texture(size) {
   this.canvas.width = this.canvas.height = size;
 }
 
-},{}],53:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 /**
  * @fileOverview Utility functions for webgl rendering.
  *
@@ -5800,7 +5082,7 @@ function swapArrayPart(array, from, to, elementsCount) {
   }
 }
 
-},{}],54:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 var Texture = require('./texture.js');
 
 module.exports = webglAtlas;
@@ -6004,7 +5286,7 @@ function isPowerOf2(n) {
   return (n & (n - 1)) === 0;
 }
 
-},{"./texture.js":52}],55:[function(require,module,exports){
+},{"./texture.js":45}],48:[function(require,module,exports){
 module.exports = webglImage;
 
 /**
@@ -6036,7 +5318,7 @@ function webglImage(size, src) {
     };
 }
 
-},{}],56:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 /**
  * @fileOverview Defines an image nodes for webglGraphics class.
  * Shape of nodes is square.
@@ -6300,7 +5582,7 @@ function createNodeVertexShader() {
   ].join("\n");
 }
 
-},{"./webgl.js":53,"./webglAtlas.js":54}],57:[function(require,module,exports){
+},{"./webgl.js":46,"./webglAtlas.js":47}],50:[function(require,module,exports){
 var documentEvents = require('../Utils/documentEvents.js');
 
 module.exports = webglInputEvents;
@@ -6560,7 +5842,7 @@ function webglInputEvents(webglGraphics) {
   }
 }
 
-},{"../Utils/documentEvents.js":40}],58:[function(require,module,exports){
+},{"../Utils/documentEvents.js":34}],51:[function(require,module,exports){
 var parseColor = require('./parseColor.js');
 
 module.exports = webglLine;
@@ -6581,7 +5863,7 @@ function webglLine(color) {
   };
 }
 
-},{"./parseColor.js":51}],59:[function(require,module,exports){
+},{"./parseColor.js":44}],52:[function(require,module,exports){
 /**
  * @fileOverview Defines a naive form of links for webglGraphics class.
  * This form allows to change color of links.
@@ -6739,7 +6021,7 @@ function webglLinkProgram() {
     };
 }
 
-},{"./webgl.js":53}],60:[function(require,module,exports){
+},{"./webgl.js":46}],53:[function(require,module,exports){
 /**
  * @fileOverview Defines a naive form of nodes for webglGraphics class.
  * This form allows to change color of node. Shape of nodes is rectangular.
@@ -6904,7 +6186,7 @@ function webglNodeProgram() {
   }
 }
 
-},{"./webgl.js":53}],61:[function(require,module,exports){
+},{"./webgl.js":46}],54:[function(require,module,exports){
 var parseColor = require('./parseColor.js');
 
 module.exports = webglSquare;
@@ -6930,7 +6212,7 @@ function webglSquare(size, color) {
   };
 }
 
-},{"./parseColor.js":51}],62:[function(require,module,exports){
+},{"./parseColor.js":44}],55:[function(require,module,exports){
 // todo: this should be generated at build time.
 module.exports = '0.8.1';
 

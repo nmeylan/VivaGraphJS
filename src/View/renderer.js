@@ -8,9 +8,7 @@ module.exports = renderer;
 
 var eventify = require('ngraph.events');
 var forceDirected = require('ngraph.forcelayout');
-var svgGraphics = require('./svgGraphics.js');
 var windowEvents = require('../Utils/windowEvents.js');
-var domInputManager = require('../Input/domInputManager.js');
 var timer = require('../Utils/timer.js');
 var getDimension = require('../Utils/getDimensions.js');
 var dragndrop = require('../Input/dragndrop.js');
@@ -195,16 +193,13 @@ function renderer(graph, settings) {
       springLength: 80,
       springCoeff: 0.0002,
     });
-    graphics = graphics || svgGraphics(graph, {
-      container: container
-    });
 
     if (!settings.hasOwnProperty('renderLinks')) {
       settings.renderLinks = true;
     }
 
     settings.prerender = settings.prerender || 0;
-    inputManager = (graphics.inputManager || domInputManager)(graph, graphics);
+    inputManager = (graphics.inputManager)(graph, graphics);
   }
 
   function renderGraph() {
