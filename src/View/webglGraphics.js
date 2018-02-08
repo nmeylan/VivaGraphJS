@@ -66,7 +66,7 @@ function webglGraphics(options) {
         },
 
         linkUIBuilder = function (link) {
-            return webglLine(0xb3b3b3ff);
+            return webglLine(0xD8D8D8FF);
         },
 /*jshint unused: true */
         updateTransformUniform = function () {
